@@ -5,38 +5,32 @@ pipeline {
 
         stage('Checkout') {
             steps {
-                echo 'Checking out code from Git'
                 checkout scm
             }
         }
 
         stage('Compile') {
             steps {
-                echo 'Compiling Java code'
                 bat 'javac Hello.java'
             }
         }
 
-        stage('Test') {
+        stage('Archive') {
             steps {
-                echo 'Running Java program'
-                bat 'java Hello'
+                archiveArtifacts artifacts: '*.class'
             }
         }
     }
 
     post {
         success {
-            echo 'Build successful – archiving artifacts'
-            archiveArtifacts artifacts: '**/*.class', fingerprint: true
+            echo 'BUILD SUCCESSFUL'
         }
         failure {
-            echo '❌ Build failed – please check errors'
-        }
-        always {
-            echo 'Pipeline execution completed'
+            echo 'BUILD FAILED'
         }
     }
 }
+
 
 
