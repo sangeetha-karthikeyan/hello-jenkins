@@ -1,5 +1,2 @@
-public class Hello {
-    public static void main(String[] args) {
-        System.out.println("Hello from GitHub CI");
-    }
-}
+System.out.println("Hello"
+
