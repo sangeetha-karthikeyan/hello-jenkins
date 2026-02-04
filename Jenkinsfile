@@ -2,32 +2,41 @@ pipeline {
     agent any
 
     stages {
+
         stage('Checkout') {
             steps {
-                echo 'Checkout from Git'
+                echo 'Checking out code from Git'
+                checkout scm
             }
         }
 
-        stage('Build') {
+        stage('Compile') {
             steps {
-                echo 'Build stage running'
+                echo 'Compiling Java code'
+                bat 'javac Hello.java'
             }
         }
 
         stage('Test') {
             steps {
-                echo 'Test stage running'
+                echo 'Running Java program'
+                bat 'java Hello'
             }
         }
     }
 
     post {
         success {
-            echo '✅ BUILD SUCCESSFUL'
+            echo 'Build successful – archiving artifacts'
+            archiveArtifacts artifacts: '**/*.class', fingerprint: true
         }
         failure {
-            echo '❌ BUILD FAILED'
+            echo '❌ Build failed – please check errors'
+        }
+        always {
+            echo 'Pipeline execution completed'
         }
     }
 }
+
 
