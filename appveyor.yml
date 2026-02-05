@@ -1,0 +1,13 @@
+version: 1.0.{build}
+
+image: Visual Studio 2022
+
+build_script:
+  - javac Hello.java
+
+artifacts:
+  - path: '*.class'
+    name: compiled-output
+
+on_failure:
+  - echo "BUILD FAILED"
